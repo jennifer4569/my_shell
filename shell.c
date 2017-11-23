@@ -23,20 +23,27 @@ char** parse_args(char* line){
   return args;
 }
 
-void execute_commands(char ** args){
+int execute_commands(char ** args){
   //if the args are separated by ;
+  /*
   char *** sep_args;
   int args_i = 0;
   int sep_args_i = 0;
-  while(args[i]){
-    if(args[i] == ";"){
-      sep_args[sep_args_i] = //args[0] to args[i]
+  while(args[args_i]){
+    if(args[args_i] == ";"){
+      sep_args[sep_args_i] = args[0];//args[0] to args[i]
 	sep_args_i++;
     }
     args_i++;
   }
-
-  execvp(args[0], args);
+  */
+  if(strcmp(args[0], "cd") == 0){
+    return 1;
+  }
+  if (execvp(args[0], args) == -1){
+    printf("%s: command not found\n", args[0]);
+    return -1;
+  }
 }
 
 void print_args(char ** args){
@@ -54,16 +61,25 @@ int main(){
     fgets(line, 256, stdin );
 
     int f = fork();
+    char** args = parse_args(line);
     //if child
     if(f == 0){
-      char** args = parse_args(line);
-      execute_commands(args);
-      return 0;
+      return execute_commands(args);
     }
     //if parent
     else{
       int status;
       wait(&status);
+      //cd
+      if(status == 1){
+	if(chdir(args[1]) != 1){
+	  printf("Current directory is now: %s\n", args[1]);
+	}
+	else{
+	  printf("%s: directory not found\n", args[1]);
+	}
+      }
+      
     }
   }
 }
