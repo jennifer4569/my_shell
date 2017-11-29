@@ -4,6 +4,8 @@
 #include <unistd.h>
 #include <fcntl.h>
 
+#include "shell.h"
+
 void run() {
 	while (1) {
 		printf("$ ");
@@ -26,7 +28,6 @@ char** parse_args(char* line) {
 	while(line){
 		tp = strsep(&line, " ");
 		args[i] = tp;
-
 		//checks for new line
 		tp = strsep(&tp, "\n");
 		if(!tp){
@@ -37,8 +38,25 @@ char** parse_args(char* line) {
 	return args;
 }
 
-int execute_commands(); // execute
+void execute_commands(){
+	char line[256];
+	fgets(line, 256, stdin);
+	
+	int f = fork();
+	if (f == 0) {
+		char** args = parse_args(line);
+		execvp(args[0], args);
+	}
+	else {
+		int status;
+		wait(&status);
+	}
+}
 
-void parse_pipe(char *command); // parse the simple pipe
+void parse_pipe(char *command){
+	
+} // parse the simple pipe
 
-void parse_redir(char *redir); // parse the simple redirection
+void parse_redir(char *redir){
+	
+} // parse the simple redirection
