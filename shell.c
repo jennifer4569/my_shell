@@ -41,11 +41,30 @@ char** parse_args(char* line) {
 void execute_commands(){
 	char line[256];
 	fgets(line, 256, stdin);
+	char** args = parse_args(line);
+	
+	if (strcmp(args[0], "exit") == 0){
+		exit(0);
+	}
+	
+	if (strcmp(args[0], "cd") == 0) {
+		if (args[1]) {
+			if (chdir(args[1]) == -1) {
+				printf("whomst such directory.\n");
+			}
+			return;
+		}
+		else {
+			chdir(getenv("HOME"));
+			return;
+		}
+	}
 	
 	int f = fork();
 	if (f == 0) {
-		char** args = parse_args(line);
 		execvp(args[0], args);
+		printf("invalid command\n");
+		exit(1);
 	}
 	else {
 		int status;
