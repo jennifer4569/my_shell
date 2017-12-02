@@ -78,6 +78,7 @@ void parse_pipe(char *command){
 } // parse the simple pipe
 
 void parse_redir(char **redirlist) {
+	char* filename[512];
 	if (redirlist[1]) {
 		int i = 0;
 		char *prev_cmd[512];
@@ -91,9 +92,10 @@ void parse_redir(char **redirlist) {
 			}
 			i++;
 		}
+		filename[0] = redirlist[2];
 		if (redirlist[i]) {
 			//printf( "prev_cmd");
-			int fd = open("commands.txt", O_WRONLY | O_CREAT | O_TRUNC, 0644);
+			int fd = open(filename[0], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 			int stdout_fd = dup(1);
 			dup2(fd, 1);
 			close(stdout_fd);
