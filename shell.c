@@ -59,13 +59,10 @@ void execute_commands(){
 			return;
 		}
 	}
-	printf("args: %s\n", args[1]);
-	if (args[1] && strcmp(args[1], ">") == 0) {
-		parse_redir(args);
-		return;
-	}	
+	
 	int f = fork();
 	if (f == 0) {
+		parse_redir(args);
 		execvp(args[0], args);
 		printf("invalid command\n");
 		exit(1);
@@ -81,29 +78,26 @@ void parse_pipe(char *command){
 } // parse the simple pipe
 
 void parse_redir(char **redirlist) {
-	int i = 0;
-	char ** prev_cmd;
-	while(redirlist[i]){
-		printf("i: %d\n", i);
-		if(strcmp(redirlist[i], ">") != 0){
-			prev_cmd[i] = redirlist[i];
-			printf("prev_cmd[%d]: %s\n", i, prev_cmd[i]);
+	if (redirlist[1]) {
+		int i = 0;
+		char *prev_cmd[512];
+		while(redirlist[i]){
+			//printf("i: %d\n", i);
+			if(strcmp(redirlist[i], ">") != 0){
+				prev_cmd[i] = redirlist[i];
+				//printf("prev_cmd[%d]: %s\n", i, prev_cmd[i]);
+			} else {
+				break;
+			}
+			i++;
 		}
-		else{
-			printf("donzo\n");
-			exit(1);
+		if (redirlist[i]) {
+			//printf( "prev_cmd");
+			int fd = open("commands.txt", O_WRONLY | O_CREAT | O_TRUNC, 0644);
+			int stdout_fd = dup(1);
+			dup2(fd, 1);
+			close(stdout_fd);
+			redirlist[i] = 0;
 		}
-		i++;
 	}
-	printf("prev_cmd");
-		int fd = open("commands.txt", O_CREAT | O_TRUNC, 0644);
-		int stdout_fd = dup(1);
-		dup2(fd, 1);	
-		
-		
-		execvp(prev_cmd[0], prev_cmd);
-		
-		dup2(stdout_fd, 1);
-		close(stdout_fd);
-	
 }
