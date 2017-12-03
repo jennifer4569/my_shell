@@ -8,4 +8,6 @@ void print_args(char** args); // prints out single command
 
 void parse_pipe(char* command); // parse the simple pipe
 
-void parse_redir(char** redir); // parse the simple redirection
+void parse_redir_in(char** redir); // parse the simple redirection
+
+void parse_redir_out(char** redir); // parse the simple redirection
