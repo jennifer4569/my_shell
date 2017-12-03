@@ -6,6 +6,14 @@
 
 #include "shell.h"
 
+/*======== void run() ==========
+  Inputs: None
+  Returns: void
+
+  Gets the command the user has imputted, parses that line, 
+  and runs the execute_commands() function on the parsed
+  arguments, including semicolons.
+====================*/
 void run() {
   while (1) {
     printf("$ ");
@@ -34,25 +42,19 @@ void run() {
       }
       i++;
     }
-    /*   
-    i = 0;
-    while(cmd0[i]){
-      printf("cmd0[%d]: %s\n", i, cmd0[i]);
-      i++;
-    }
-    i = 0;
-    while(cmd1[i]){
-      printf("cmd1[%d]: %s\n", i, cmd1[i]);
-      i++;
-    }
-    */
-
     execute_commands(cmd0);
     if(semicol == 1){
       execute_commands(cmd1);
     }
   }
 }
+
+/*======== void print_args() ==========
+  Inputs: char **args
+  Returns: void
+  
+  Prints the arguments given, args.
+====================*/
 
 void print_args(char** args) {
   int i = 0;
@@ -61,6 +63,15 @@ void print_args(char** args) {
     i++;
   }
 }
+
+/*======== char **parse_args() ==========
+  Inputs: char *line
+  Returns: char **args
+
+  Takes in a line that the user inputted, and breaks it 
+  into a char **, args. It also getss rid of new lines at 
+  the end.
+====================*/
 
 char** parse_args(char* line) {
   char** args = (char**)calloc(6, sizeof(char*));
@@ -78,6 +89,14 @@ char** parse_args(char* line) {
   }
   return args;
 }
+
+/*======== void execute_commands() ==========
+  Inputs: char *args[256]
+  Returns: void
+
+  Executes the inputted command by forking, and deals with 
+  cd, exit, and redirection.
+====================*/
 
 void execute_commands(char *args[256]){	
   if (strcmp(args[0], "exit") == 0){
@@ -111,6 +130,7 @@ void execute_commands(char *args[256]){
   wait(&status);
 }
 
+/*
 int parse_pipe(char **command){
   int store = -1;
   //char *cmd = (char *)calloc(256, sizeof(char));
@@ -146,9 +166,19 @@ int parse_pipe(char **command){
     fgets(buffer, sizeof(buffer), p);
     buffer[sizeof(buffer) - 1] = 0;
     pclose(p);*/
-  }
-  return store;
-} // parse the simple pipe
+//}
+//return store;
+//} // parse the simple pipe
+
+/*======== void parse_redir_out() ==========
+  Inputs: char **redirlist
+  Returns: void
+
+  Given the user-inputted command, check to see if it needs 
+  to redirect stdout -- if so, it executes the given command, 
+  and redirects stdout to the given file. (Creates a new file 
+  if it does not already exist).
+====================*/
 
 void parse_redir_out(char **redirlist) {
   char* filename[512];
@@ -174,6 +204,15 @@ void parse_redir_out(char **redirlist) {
   }
 }
 
+/*======== void parse_redir_in() ==========
+  Inputs: char **redirlist
+  Returns: void
+
+  Given the user-inputted command, check to see if it needs 
+  to redirect stdin -- if so, it reads the given file, and 
+  executes the command in the shell.
+====================*/
+    
 void parse_redir_in(char **redirlist) {
   char* filename[512];
   if (redirlist[1]) {
