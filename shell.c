@@ -9,7 +9,48 @@
 void run() {
   while (1) {
     printf("$ ");
-    execute_commands();
+    char line[256];
+    fgets(line, 256, stdin);
+    char** args = parse_args(line);
+    
+    int i = 0;
+    char *cmd0[256];
+    char *cmd1[256];
+    
+    int semicol = 0;
+    int j = 0;
+    while(args[i]){
+      if(semicol == 0){
+	if(strcmp(args[i], ";") == 0){
+	  semicol = 1;
+	}
+	else{
+	  cmd0[i] = args[i];
+	}
+      }
+      if(semicol == 1 && strcmp(args[i], ";") != 0){
+	cmd1[j] = args[i];
+	j++;
+      }
+      i++;
+    }
+    /*   
+    i = 0;
+    while(cmd0[i]){
+      printf("cmd0[%d]: %s\n", i, cmd0[i]);
+      i++;
+    }
+    i = 0;
+    while(cmd1[i]){
+      printf("cmd1[%d]: %s\n", i, cmd1[i]);
+      i++;
+    }
+    */
+
+    execute_commands(cmd0);
+    if(semicol == 1){
+      execute_commands(cmd1);
+    }
   }
 }
 
@@ -38,11 +79,7 @@ char** parse_args(char* line) {
   return args;
 }
 
-void execute_commands(){
-  char line[256];
-  fgets(line, 256, stdin);
-  char** args = parse_args(line);
-	
+void execute_commands(char *args[256]){	
   if (strcmp(args[0], "exit") == 0){
     exit(0);
   }
@@ -59,7 +96,7 @@ void execute_commands(){
       return;
     }
   }
-  if(parse_pipe(args)){  
+  //  if(parse_pipe(args)){  
 
     int f = fork();
     if (f == 0) {
@@ -69,7 +106,7 @@ void execute_commands(){
       printf("invalid command\n");
       exit(1);
     }
-  }
+    //}
   int status;
   wait(&status);
 }
