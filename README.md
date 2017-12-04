@@ -5,14 +5,14 @@
   * Forks and executes commands (including cd and exit).
   * Parses up to two commands on one line.
   * Redirects using >, <.
-	* Simple, single pipes (such as ls | wc).
+  * Simple, single pipes (such as ls | wc).
 
 ### Attempted:
   * Parsing more than two commands on one line.
 
 ### Bugs:
   * If commands are not separated with spaces, they will not run properly.
-	* If there are multiple commands adjacent to each other, it will not run properly. For example, two commas adjacent to each other. 
+  * If there are multiple commands adjacent to each other, it will not run properly. For example, two commas adjacent to each other. 
 
 ### Files & Function Headers:
 main.c
