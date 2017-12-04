@@ -2,15 +2,17 @@
 ## by Jennifer Zhang and Yedoh Kang, period 4
 
 ### Features:
-  * Forks and executes commands.
+  * Forks and executes commands (including cd and exit).
   * Parses up to two commands on one line.
   * Redirects using >, <.
 
 ### Attempted:
-  * Pipes
+  * Pipes (single).
+	* Parsing more than two commands on one line.
 
 ### Bugs:
   * If commands are not separated with spaces, they will not run properly.
+	* If there are multiple commands adjacent to each other, it will not run properly. For example, two commas adjacent to each other. 
 
 ### Files & Function Headers:
 main.c
@@ -18,45 +20,29 @@ main.c
 
 shell.c
   * Contains all the functions for shell.
-    ```
-    /*======== void run() ==========
-    Inputs: None
-    Returns: void
 
-    Gets the command the user has imputted, parses that line, 
-    and runs the execute_commands() function on the parsed
-    arguments, including semicolons.
-    ====================*/
+		```
 
-    /*======== void print_args() ==========
-    Inputs: char **args
-    Returns: void
+		/*======== void print_args() ==========
+		Inputs: char **args
+		Returns: void
+  
+		Prints the arguments given, args.
+		====================*/
 
-    Prints the arguments given, args.
-    ====================*/
+		/*======== char **parse_args() ==========
+		Inputs: char *line
+		Returns: char **args
 
-    /*======== char **parse_args() ==========
-    Inputs: char *line
-    Returns: char **args
-
-    Takes in a line that the user inputted, and breaks it 
-    into a char **, args. It also getss rid of new lines at 
-    the end.
-    ====================*/
-
-    /*======== void execute_commands() ==========
-    Inputs: char *args[256]
-    Returns: void
-
-    Executes the inputted command by forking, and deals with 
-    cd, exit, and redirection.
-    ====================*/
+		Takes in a line that the user inputted, and breaks it 
+		into a char **, args. It also gets rid of new lines.
+		====================*/
 
     /*======== void parse_redir_out() ==========
     Inputs: char **redirlist
     Returns: void
 
-    Given the user-inputted command, check to see if it needs 
+    Given the user-inputted command, it checks to see if it needs 
     to redirect stdout -- if so, it executes the given command, 
     and redirects stdout to the given file. (Creates a new file 
     if it does not already exist).
@@ -66,10 +52,28 @@ shell.c
     Inputs: char **redirlist
     Returns: void
 
-    Given the user-inputted command, check to see if it needs 
+    Given the user-inputted command, it checks to see if it needs 
     to redirect stdin -- if so, it reads the given file, and 
     executes the command in the shell.
     ====================*/
+
+		/*======== void execute_commands() ==========
+		Inputs: char *args[256]
+		Returns: void
+
+		Executes the inputted command by forking, and deals with 
+		cd, exit, and redirection.
+		====================*/
+
+		/*======== void run() ==========
+		Inputs: None
+		Returns: void
+
+		Gets the command the user has imputted, parses that line, 
+		and runs the execute_commands() function on the parsed
+		arguments, including semicolons.
+		====================*/
     ```
+
 shell.h
   * Contains all the headers for shell.c

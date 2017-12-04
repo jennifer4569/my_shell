@@ -6,9 +6,10 @@
 
 int main() {
 	
-	printf("Note: MUST use whitespace when using ; or | OR the shell will NOT work properly.\n");
-	printf("Ex: ls ; echo hello\n");
-	printf("Ex: ls | wc\n");
+	printf("\n\nWelcome to Jennifer and Yedoh's shell!\n");
+	printf("\nNote: MUST use whitespace when using ; or | OR the shell will NOT work properly.\n");
+	printf("Note: At this moment, piping, or using |, does not work.\n");
+	printf("Ex: ls ; echo hello\n\n");
 	run();
 	return 0;
 	

@@ -1,12 +1,23 @@
-all: shell.c main.c
-	gcc -o run shell.c main.c
+FLAGS = -g -Wall -Wextra -pedantic
+CC = gcc $(FLAGS)
 
-run: all
-	./run
-	
+.PHONY: all clean jysh run
+
+all: build
+
+run: build jysh
+
 clean:
-	rm run
-	rm a.out
-	rm *.o
-	rm *~
+	rm -rf build
 
+jysh: build/jysh
+	build/jysh
+
+build/jysh: build/main.o build/shell.o
+	@$(CC) -o $@ $^
+
+build/%.o: %.c
+	$(CC) -o $@ -c $^
+
+build:
+	mkdir build
