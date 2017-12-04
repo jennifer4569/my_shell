@@ -8,14 +8,14 @@
 
 
 /*======== void print_args() ==========
-Inputs: char **args
+Inputs: char** args
 Returns: void
-  
+
 Prints the arguments given, args.
 ====================*/
 void print_args(char** args) {
 	int i = 0;
-	while(args[i]){
+	while (args[i]) {
 		printf("%s\n", args[i]);
 		i++;
 	}
@@ -23,22 +23,22 @@ void print_args(char** args) {
 
 
 /*======== char **parse_args() ==========
-Inputs: char *line
-Returns: char **args
+Inputs: char* line
+Returns: char** args
 
 Takes in a line that the user inputted, and breaks it 
-into a char **, args. It also gets rid of new lines.
+into a char**, args. It also gets rid of new lines.
 ====================*/
 char** parse_args(char* line) {
 	char** args = (char**)calloc(6, sizeof(char*));
 	int i = 0;
-	char * tp;
-	while(line){
+	char* tp;
+	while (line) {
 		tp = strsep(&line, " ");
 		args[i] = tp;
 		//checks for new line
 		tp = strsep(&tp, "\n");
-		if(!tp){
+		if (!tp){
 			args[i] = 0;
 		}
 		i++;
@@ -48,7 +48,7 @@ char** parse_args(char* line) {
 
 
 /*======== void parse_redir_out() ==========
-Inputs: char **redirlist
+Inputs: char** redirlist
 Returns: void
 
 Given the user-inputted command, it checks to see if it needs 
@@ -56,13 +56,13 @@ to redirect stdout -- if so, it executes the given command,
 and redirects stdout to the given file. (Creates a new file 
 if it does not already exist).
 ====================*/
-void parse_redir_out(char **redirlist) {
+void parse_redir_out(char** redirlist) {
 	char* filename[512];
 	if (redirlist[1]) {
 		int i = 0;
-		char *prev_cmd[512];
-		while(redirlist[i]){
-			if(strcmp(redirlist[i], ">") != 0){
+		char* prev_cmd[512];
+		while (redirlist[i]) {
+			if (strcmp(redirlist[i], ">") != 0){
 				prev_cmd[i] = redirlist[i];
 			} else {
 				break;
@@ -82,22 +82,23 @@ void parse_redir_out(char **redirlist) {
 
 
 /*======== void parse_redir_in() ==========
-Inputs: char **redirlist
+Inputs: char** redirlist
 Returns: void
 
 Given the user-inputted command, it checks to see if it needs 
 to redirect stdin -- if so, it reads the given file, and 
 executes the command in the shell.
 ====================*/
-void parse_redir_in(char **redirlist) {
+void parse_redir_in(char** redirlist) {
 	char* filename[512];
 	if (redirlist[1]) {
 		int i = 0;
-		char *prev_cmd[512];
-		while(redirlist[i]){
+		char* prev_cmd[512];
+		while (redirlist[i]) {
 			if(strcmp(redirlist[i], "<") != 0){
 				prev_cmd[i] = redirlist[i];
-			} else {
+			} 
+			else {
 				break;
 			}
 			i++;
@@ -114,7 +115,7 @@ void parse_redir_in(char **redirlist) {
 
 
 /*======== void parse_pipe() ==========
-Inputs: char **redirlist
+Inputs: char** redirlist
 Returns: void
 
 Executes simple pipes, given by the user-inputted command. It
@@ -122,7 +123,7 @@ checks to see if it has a |, then runs the first command and
 then uses the output from the first command as the input
 for the second command. 
 ====================*/
-void parse_pipe(char **redirlist) {
+void parse_pipe(char** redirlist) {
 	// if ls | wc, then ls > out then wc < out
   int i = 0;
 	int j = 0;
@@ -147,17 +148,16 @@ void parse_pipe(char **redirlist) {
 
 
 /*======== void execute_commands() ==========
-Inputs: char *args[256]
+Inputs: char* args[256]
 Returns: void
 
 Executes the inputted command by forking, and deals with 
 cd, exit, and redirection.
 ====================*/
-void execute_commands(char *args[256]){	
+void execute_commands(char* args[256]){	
 	if (strcmp(args[0], "exit") == 0){
 		exit(0);
 	}
-	
 	if (strcmp(args[0], "cd") == 0) {
 		if (args[1]) {
 			if (chdir(args[1]) == -1) {
@@ -201,28 +201,27 @@ void run() {
 		fgets(line, 256, stdin);
 		char** args = parse_args(line);
 		int i = 0;
-		char *cmd0[256] = {};
-		char *cmd1[256] = {};
-    
+		char* cmd0[256] = {};
+		char* cmd1[256] = {};
 		int semicol = 0;
 		int j = 0;
-		while(args[i]){
-			if(semicol == 0){
-				if(strcmp(args[i], ";") == 0){
+		while (args[i]) {
+			if (semicol == 0) {
+				if (strcmp(args[i], ";") == 0) {
 					semicol = 1;
 				}
-				else{
+				else {
 					cmd0[i] = args[i];
 				}
 			}
-			if(semicol == 1 && strcmp(args[i], ";") != 0){
+			if (semicol == 1 && strcmp(args[i], ";") != 0) {
 				cmd1[j] = args[i];
 				j++;
 			}
 			i++;
 		}
 		execute_commands(cmd0);
-		if(semicol == 1){
+		if (semicol == 1) {
 			execute_commands(cmd1);
 		}
 		free(args);
