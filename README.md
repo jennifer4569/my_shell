@@ -8,11 +8,11 @@
 
 ### Attempted:
   * Pipes (single).
-	* Parsing more than two commands on one line.
+  * Parsing more than two commands on one line.
 
 ### Bugs:
   * If commands are not separated with spaces, they will not run properly.
-	* If there are multiple commands adjacent to each other, it will not run properly. For example, two commas adjacent to each other. 
+  * If there are multiple commands adjacent to each other, it will not run properly. For example, two commas adjacent to each other. 
 
 ### Files & Function Headers:
 main.c
@@ -57,22 +57,22 @@ shell.c
     executes the command in the shell.
     ====================*/
 
-		/*======== void execute_commands() ==========
-		Inputs: char *args[256]
-		Returns: void
+    /*======== void execute_commands() ==========
+    Inputs: char *args[256]
+    Returns: void
 
-		Executes the inputted command by forking, and deals with 
-		cd, exit, and redirection.
-		====================*/
+    Executes the inputted command by forking, and deals with 
+    cd, exit, and redirection.
+    ====================*/
 
-		/*======== void run() ==========
-		Inputs: None
-		Returns: void
+    /*======== void run() ==========
+    Inputs: None
+    Returns: void
 
-		Gets the command the user has imputted, parses that line, 
-		and runs the execute_commands() function on the parsed
-		arguments, including semicolons.
-		====================*/
+    Gets the command the user has imputted, parses that line, 
+    and runs the execute_commands() function on the parsed
+    arguments, including semicolons.
+    ====================*/
     ```
 
 shell.h
