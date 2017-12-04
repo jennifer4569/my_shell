@@ -6,8 +6,8 @@ void parse_redir_in(char** redirlist); // parse the simple redirection
 
 void parse_redir_out(char** redirlist); // parse the simple redirection
 
+void parse_pipe(char** redirlist); // parse the simple pipe
+
 void execute_commands(); // execute
 
 void run(); // run
-
-void parse_pipe(char** redirlist); // parse the simple pipe
