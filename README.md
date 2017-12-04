@@ -22,22 +22,21 @@ shell.c
   * Contains all the functions for shell.
 
 		```
-
 		/*======== void print_args() ==========
 		Inputs: char **args
 		Returns: void
-  
+		
 		Prints the arguments given, args.
 		====================*/
-
+		
 		/*======== char **parse_args() ==========
 		Inputs: char *line
 		Returns: char **args
-
+		
 		Takes in a line that the user inputted, and breaks it 
 		into a char **, args. It also gets rid of new lines.
 		====================*/
-
+		
     /*======== void parse_redir_out() ==========
 		Inputs: char **redirlist
 		Returns: void
