@@ -61,6 +61,7 @@ void parse_redir_out(char** redirlist) {
 	if (redirlist[1]) {
 		int i = 0;
 		char* prev_cmd[512];
+		// separate by >
 		while (redirlist[i]) {
 			if (strcmp(redirlist[i], ">") != 0){
 				prev_cmd[i] = redirlist[i];
@@ -69,7 +70,9 @@ void parse_redir_out(char** redirlist) {
 			}
 			i++;
 		}
+		// file name
 		filename[0] = redirlist[i + 1];
+		// stdout
 		if (redirlist[i]) {
 			int fd = open(filename[0], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 			int stdout_fd = dup(1);
@@ -94,6 +97,7 @@ void parse_redir_in(char** redirlist) {
 	if (redirlist[1]) {
 		int i = 0;
 		char* prev_cmd[512];
+		// separate by <
 		while (redirlist[i]) {
 			if(strcmp(redirlist[i], "<") != 0){
 				prev_cmd[i] = redirlist[i];
@@ -103,7 +107,9 @@ void parse_redir_in(char** redirlist) {
 			}
 			i++;
 		}
+		// file name
 		filename[0] = redirlist[i + 1];
+		// stdin
 		if (redirlist[i]) {
 			int fd = open(filename[0], O_RDONLY);
 			dup2(fd, 0);
@@ -135,6 +141,7 @@ void parse_pipe(char** redirlist) {
         strcat(commands, " ");
 				j++;
 			}
+			// piping
       FILE *file = popen(commands, "r");
       int fd = fileno(file);
       dup2(fd, 0);
@@ -155,9 +162,11 @@ Executes the inputted command by forking, and deals with
 cd, exit, and redirection.
 ====================*/
 void execute_commands(char* args[256]){	
+	// exit
 	if (strcmp(args[0], "exit") == 0){
 		exit(0);
 	}
+	// cd
 	if (strcmp(args[0], "cd") == 0) {
 		if (args[1]) {
 			if (chdir(args[1]) == -1) {
@@ -170,6 +179,7 @@ void execute_commands(char* args[256]){
 			return;
 		}
 	}
+	// forking
 	int f = fork();
 	if (f == 0) {
 		parse_redir_out(args);
@@ -200,6 +210,7 @@ void run() {
 		char line[256];
 		fgets(line, 256, stdin);
 		char** args = parse_args(line);
+		// deals with semicolons
 		int i = 0;
 		char* cmd0[256] = {};
 		char* cmd1[256] = {};
