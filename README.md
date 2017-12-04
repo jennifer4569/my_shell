@@ -21,7 +21,7 @@ main.c
 shell.c
   * Contains all the functions for shell.
 
-		```
+```
 		/*======== void print_args() ==========
 		Inputs: char **args
 		Returns: void
@@ -72,7 +72,7 @@ shell.c
 		and runs the execute_commands() function on the parsed
 		arguments, including semicolons.
 		====================*/
-    		```
+```
 
 shell.h
   * Contains all the headers for shell.c
