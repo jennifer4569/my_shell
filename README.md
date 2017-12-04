@@ -10,7 +10,6 @@
   * Pipes
 
 ### Bugs:
-  * Sometimes, running commands such as ```cat``` breaks everything -- functions that work otherwise, such as ```ls```, will not run after cat crashes.
   * If commands are not separated with spaces, they will not run properly.
 
 ### Files & Function Headers:
