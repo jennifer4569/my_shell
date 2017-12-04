@@ -37,7 +37,7 @@ shell.c
 		into a char **, args. It also gets rid of new lines.
 		====================*/
 		
-    /*======== void parse_redir_out() ==========
+		/*======== void parse_redir_out() ==========
 		Inputs: char **redirlist
 		Returns: void
 		
@@ -72,7 +72,7 @@ shell.c
 		and runs the execute_commands() function on the parsed
 		arguments, including semicolons.
 		====================*/
-    ```
+    		```
 
 shell.h
   * Contains all the headers for shell.c
