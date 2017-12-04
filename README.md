@@ -23,22 +23,22 @@ shell.c
 
 ```
 		/*======== void print_args() ==========
-		Inputs: char **args
+		Inputs: char** args
 		Returns: void
 		
 		Prints the arguments given, args.
 		====================*/
 		
-		/*======== char **parse_args() ==========
-		Inputs: char *line
-		Returns: char **args
+		/*======== char** parse_args() ==========
+		Inputs: char* line
+		Returns: char** args
 		
 		Takes in a line that the user inputted, and breaks it 
-		into a char **, args. It also gets rid of new lines.
+		into a char**, args. It also gets rid of new lines.
 		====================*/
 		
 		/*======== void parse_redir_out() ==========
-		Inputs: char **redirlist
+		Inputs: char** redirlist
 		Returns: void
 		
 		Given the user-inputted command, it checks to see if it needs 
@@ -48,7 +48,7 @@ shell.c
 		====================*/
 		
 		/*======== void parse_redir_in() ==========
-		Inputs: char **redirlist
+		Inputs: char** redirlist
 		Returns: void
 		
 		Given the user-inputted command, it checks to see if it needs 
@@ -57,7 +57,7 @@ shell.c
 		====================*/
 		
 		/*======== void parse_pipe() ==========
-		Inputs: char **redirlist
+		Inputs: char** redirlist
 		Returns: void
 		
 		Given the user-inputted command, it checks to see if it has a |
@@ -67,7 +67,7 @@ shell.c
 		====================*/
 		
 		/*======== void execute_commands() ==========
-		Inputs: char *args[256]
+		Inputs: char* args[256]
 		Returns: void
 		
 		Executes the inputted command by forking, and deals with 
