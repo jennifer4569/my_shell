@@ -20,10 +20,9 @@ void run() {
 		char line[256];
 		fgets(line, 256, stdin);
 		char** args = parse_args(line);
-    
 		int i = 0;
-		char *cmd0[256];
-		char *cmd1[256];
+		char *cmd0[256] = {};
+		char *cmd1[256] = {};
     
 		int semicol = 0;
 		int j = 0;
@@ -46,6 +45,7 @@ void run() {
 		if(semicol == 1){
 			execute_commands(cmd1);
 		}
+		free(args);
 	}
 }
 
@@ -133,40 +133,40 @@ void execute_commands(char *args[256]){
 
 /*
 int parse_pipe(char **command){
-int store = -1;
-//char *cmd = (char *)calloc(256, sizeof(char));
-char cmd0 = (char *)calloc(256, sizeof(char));
-char cmd1 = (char *)calloc(256, sizeof(char));
-char pipe = (char *)calloc(256, sizeof(char));
-int i = 0;
-while(command[i]){
-if(store == -1){
-if(strcmp(command[i], "|") == 0){
-store = 0;
-}
-strcat(cmd0, command[i]);
-}
-else{
-strcat(cmd1, command[i]);
-}
-}
-if(!store){
-FILE *pr = popen(cmd0, "r");
-FILE *pw = popen(cmd1, "w");
-int fr = fileno(pr);
-int fw = fileno(pw);
-read(fr, pipe, 256);
-write(fw, pipe, 256);
-close(fr);
-close(fw);
-pclose(pr);
-pclose(pw);
-*FILE *p;
-p = popen(cmd, "w");
-char buffer[256];
-fgets(buffer, sizeof(buffer), p);
-buffer[sizeof(buffer) - 1] = 0;
-pclose(p);*/
+	int store = -1;
+	char *cmd = (char *)calloc(256, sizeof(char));
+	char cmd0 = (char *)calloc(256, sizeof(char));
+	char cmd1 = (char *)calloc(256, sizeof(char));
+	char pipe = (char *)calloc(256, sizeof(char));
+	int i = 0;
+	while(command[i]){
+		if(store == -1){
+			if(strcmp(command[i], "|") == 0){
+				store = 0;
+			}
+			strcat(cmd0, command[i]);
+		}
+		else{
+			strcat(cmd1, command[i]);
+		}
+	}
+	if(!store){
+		FILE *pr = popen(cmd0, "r");
+		FILE *pw = popen(cmd1, "w");
+		int fr = fileno(pr);
+		int fw = fileno(pw);
+		read(fr, pipe, 256);
+		write(fw, pipe, 256);
+		close(fr);
+		close(fw);
+		pclose(pr);
+		pclose(pw);
+		*FILE *p;
+		p = popen(cmd, "w");
+		char buffer[256];
+		fgets(buffer, sizeof(buffer), p);
+		buffer[sizeof(buffer) - 1] = 0;
+		pclose(p);*/
 //}
 //return store;
 //} // parse the simple pipe
