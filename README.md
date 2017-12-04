@@ -20,17 +20,17 @@ main.c
 
 shell.c
   * Contains all the functions for shell.
-
-	```
+  
+  	```
 	/*======== void print_args() ==========
-	Inputs: char **args
+	Inputs: char ** args
 	Returns: void
   
 	Prints the arguments given, args.
 	====================*/
 
-	/*======== char **parse_args() ==========
-	Inputs: char *line
+	/*======== char ** parse_args() ==========
+	Inputs: char * line
 	Returns: char **args
 
 	Takes in a line that the user inputted, and breaks it 
@@ -38,7 +38,7 @@ shell.c
 	====================*/
 
    	/*======== void parse_redir_out() ==========
-    	Inputs: char **redirlist
+    	Inputs: char ** redirlist
     	Returns: void
 
     	Given the user-inputted command, it checks to see if it needs 
@@ -48,16 +48,16 @@ shell.c
     	====================*/
 
     	/*======== void parse_redir_in() ==========
-    	Inputs: char **redirlist
+    	Inputs: char ** redirlist
     	Returns: void
 
     	Given the user-inputted command, it checks to see if it needs 
-    	to redirect stdin -- if so, it reads the given file, and 
+	to redirect stdin -- if so, it reads the given file, and 
     	executes the command in the shell.
     	====================*/
 
     	/*======== void execute_commands() ==========
-    	Inputs: char *args[256]
+    	Inputs: char * args[256]
     	Returns: void
 
     	Executes the inputted command by forking, and deals with 
@@ -72,7 +72,7 @@ shell.c
     	and runs the execute_commands() function on the parsed
     	arguments, including semicolons.
     	====================*/
-    	```
-
+	```
+	
 shell.h
   * Contains all the headers for shell.c
